@@ -288,6 +288,8 @@
       "dose_rate",
       "dose_rate_usvh",
       "doseRateUsvh",
+      "uSv",
+      "usv",
       "usvh",
       "uSvH",
       "uSv_h",
@@ -307,7 +309,7 @@
       "countRate"
     ]);
 
-    const cpm = firstNumber(object, [
+    let cpm = firstNumber(object, [
       "cpm_i",
       "cpm",
       "cpm_avg",
@@ -315,6 +317,11 @@
       "countPerMinute",
       "countsPerMinute"
     ]);
+
+    // API station_03/station_04 chỉ trả CPS, không có CPM.
+    if (cpm === null && cps !== null) {
+      cpm = cps * 60;
+    }
 
     const total = firstNumber(object, [
       "total_counts",
